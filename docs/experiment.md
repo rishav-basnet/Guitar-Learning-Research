@@ -1,7 +1,7 @@
 # Guitar skill acquisition experiment — design reference
 
 This document is the **single source of truth** for experiment design and analysis intent.  
-It intentionally **does not** contain raw measurements; logged data will live under `data/` with a separate data dictionary when the CSV schema is finalized.
+Block-level measurements live in **`data/main-data.csv`**; column definitions are in **`docs/data_dictionary.md`**.
 
 ---
 
@@ -105,9 +105,8 @@ Each mode is tested at: **60, 70, 80, 90, 100, 110** BPM.
 
 | Path | Role |
 |------|------|
-| `data/` | Raw and/or processed logs (CSV, etc.) — added as the project proceeds |
+| `data/main-data.csv` | Canonical block-level dataset (`docs/data_dictionary.md`) |
 | `docs/experiment.md` | This file — protocol and definitions |
+| `docs/data_dictionary.md` | Column specs and integrity notes for `main-data.csv` |
 | `notebooks/` | EDA, visualization, modeling |
 | `src/` | Optional: reusable load/feature/plot code |
-
-When the CSV columns are fixed, add a short **`docs/data_dictionary.md`** listing each column, type, allowed values, and how it maps to the definitions above.
