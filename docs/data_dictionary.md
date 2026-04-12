@@ -1,58 +1,69 @@
-# Data dictionary — `data/main-data.csv`
+# Data Dictionary
 
-Canonical **block-level** dataset for the A ↔ E chord transition experiment. One row = one **block** (4 trials at a given session, day, mode, and BPM).
+File: `data/main-data.csv`
 
-See **`docs/experiment.md`** for protocol definitions (session, condition, block, trial, modes, BPM grid).
-
----
-
-## File
-
-| Property | Value |
-|----------|--------|
-| Path | `data/main-data.csv` |
-| Rows (current) | 168 (excluding header) |
-| Sessions | 7 (IDs 1–7) |
-| Rows per session | 24 (= 4 modes × 6 BPMs) |
+Each row represents one block:
+a single combination of session, mode, and BPM.
 
 ---
 
 ## Columns
 
-| Column | Type | Allowed values | Description |
-|--------|------|----------------|-------------|
-| `session` | int | ≥ 1 | Session index (full practice video run-through). |
-| `day` | int | ≥ 1 | Day index aligned with session in this file (1:1 with `session` for current data). |
-| `mode` | int | 1–4 | Time-constraint level (strumming density); 4 = hardest. |
-| `bpm` | int | 60, 70, 80, 90, 100, 110 | Metronome tempo for that condition. |
-| `successful_trials` | int | 0–4 | Count of successful trials in the block (out of 4). |
-| `clean_ratio` | float | 0, 0.25, 0.5, 0.75, 1.0 | `successful_trials / 4`. |
+### session
+- Integer
+- Identifies the practice session
+- In this dataset, sessions increase sequentially over time
 
 ---
 
-## Derived metrics (compute in analysis, not stored)
-
-- **`block_pass`:** 1 if `clean_ratio >= 0.75`, else 0.
-- **Performance threshold (per session, per mode):** maximum `bpm` such that `clean_ratio >= 0.75` (if none, undefined or 0 per convention—document choice in notebooks).
-
----
-
-## Integrity checks (automated)
-
-These hold for the current file:
-
-- `clean_ratio == successful_trials / 4` for every row.
-- `successful_trials` in `[0, 4]`.
-- `bpm` in `{60, 70, 80, 90, 100, 110}`.
-- `mode` in `{1, 2, 3, 4}`.
-- Exactly **24** rows per `session`.
+### day
+- Integer
+- Day index of practice
+- Matches session in this dataset (1 session per day)
 
 ---
 
-## Other files in `data/`
+### mode
+- Integer (1–4)
+- Represents difficulty level
 
-| File | Note |
-|------|------|
-| `practice_log.csv` | Early placeholder with a different schema; **not** the analysis dataset. Use **`main-data.csv`** for all analysis unless migrated intentionally. |
+Higher mode → less time available to switch chords  
+Lower mode → more time available  
 
-When adding new exports (e.g. raw notes, session timestamps), prefer `data/raw/` vs `data/processed/` and extend this dictionary.
+---
+
+### bpm
+- Integer (60–110)
+- Speed of the metronome
+
+Higher BPM → faster tempo → less time per beat  
+
+---
+
+### successful_trials
+- Integer (0–4)
+- Number of clean chord transitions in that block
+
+Each block contains exactly 4 trials
+
+---
+
+### clean_ratio
+- Float (0.0 – 1.0)
+- Computed as:
+
+  successful_trials / 4
+
+Represents consistency:
+- 1.0 → all trials successful  
+- 0.0 → no successful trials  
+
+Values increase in steps of 0.25
+
+---
+
+## Notes
+
+- The dataset is fully structured (no missing conditions)
+- Each session contains the same 24 blocks (4 modes × 6 BPMs)
+- This allows direct comparison across sessions
