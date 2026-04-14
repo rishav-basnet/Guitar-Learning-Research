@@ -2,7 +2,7 @@
 
 ## Overview
 
-This experiment tracks how chord transition performance changes during a single structured practice session.
+This experiment tracks how chord transition performance changes across structured practice sessions over time.
 
 Each session follows the same routine, allowing performance to be compared across time.
 

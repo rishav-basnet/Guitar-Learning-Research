@@ -6,6 +6,9 @@ If no row meets the threshold for a (session, mode), the value is NaN (line brea
 
 from pathlib import Path
 
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 

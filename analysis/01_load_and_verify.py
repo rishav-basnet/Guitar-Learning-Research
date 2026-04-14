@@ -1,9 +1,4 @@
-"""
-Step 1: Load main-data.csv, inspect, and verify integrity.
-
-Design note: the CSV uses `successful_trials` (0–4) for what you called clean_cycles;
-`clean_ratio` is successful_trials / 4. Modes are integers 1–4 (see docs/data_dictionary.md).
-"""
+"""Load main-data.csv, inspect it, and verify column integrity."""
 
 from pathlib import Path
 
@@ -117,25 +112,9 @@ def main() -> None:
     print()
 
     print(
-        """=== Suggested next steps (no modeling yet) ===
-
-Visualization
-- Line plots: clean_ratio vs bpm, faceted by mode, colored or faceted by session (learning).
-- Session index on x-axis: mean clean_ratio per session, overall and split by mode.
-- Heatmaps: rows = session, cols = (mode, bpm) or session × bpm within one mode.
-
-Feature engineering (keep interpretable)
-- block_pass: 1 if clean_ratio >= 0.75 (see data_dictionary).
-- session-centered metrics: cumulative mean clean_ratio, or change from session 1.
-- Optional: time pressure index as ordered bpm (60=1 … 110=6) for monotonic trend plots.
-
-Analysis
-- Compare distributions of clean_ratio by mode and by bpm (e.g. side-by-side box/strip plots).
-- Within-subject trends: same participant trajectory over session (you have one series per design—describe as n=7 sessions).
-- Pre-register simple questions: e.g. "does later session shift the bpm–performance curve?"
-- Report non-monotonicity explicitly: count reversals, show raw points—not only smooth fits.
-
-"""
+        "=== Next ===\n"
+        "Figures: python analysis/02_learning_progression.py, "
+        "03_clean_ratio_vs_bpm.py, 04_max_bpm_threshold.py\n"
     )
 
 

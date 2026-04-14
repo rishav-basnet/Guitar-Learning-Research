@@ -102,6 +102,24 @@ Python, pandas, matplotlib
 
 ---
 
+## Run the analysis
+
+From the repository root, with a virtual environment:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python analysis/01_load_and_verify.py
+python analysis/02_learning_progression.py
+python analysis/03_clean_ratio_vs_bpm.py
+python analysis/04_max_bpm_threshold.py
+```
+
+Figures are written to `analysis/figures/`. The integrity script checks that `clean_ratio` matches `successful_trials / 4` on every row.
+
+---
+
 ## Notes
 
 This is a small, single-learner study. It is intended to explore patterns in practice rather than make general conclusions.

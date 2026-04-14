@@ -4,6 +4,9 @@ clean_ratio vs BPM: one line per mode, mean clean_ratio across sessions.
 
 from pathlib import Path
 
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
