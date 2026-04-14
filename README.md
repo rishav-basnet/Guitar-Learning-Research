@@ -1,11 +1,17 @@
 # Guitar Skill Acquisition Study
 
+
 A structured, data-driven study measuring how a beginner improves guitar chord transitions (A ↔ E) under controlled time pressure.
+
 
 **Website**: https://rishav-guitar-research.vercel.app/
 
+
+
 ![Performance Over Time](./docs/chart.png)
 *Figure: Learning progression across sessions showing early improvement followed by stabilization.*
+
+
 
 ![Experiment Criteria](./docs/attempts.png)
 *Figure: Definition of a successful vs unsuccessful chord transition used for consistent labeling.*
