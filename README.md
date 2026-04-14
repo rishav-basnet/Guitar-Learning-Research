@@ -2,7 +2,7 @@
 
 A structured, data-driven study measuring how a beginner improves guitar chord transitions (A ↔ E) under controlled time pressure.
 
-Live Demo: https://rishav-guitar-research.vercel.app/
+**Website**: https://rishav-guitar-research.vercel.app/
 
 ![Performance Over Time](./docs/chart.png)
 *Figure: Learning progression across sessions showing early improvement followed by stabilization.*
