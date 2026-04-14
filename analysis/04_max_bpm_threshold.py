@@ -45,12 +45,13 @@ def main() -> None:
     fig, ax = plt.subplots(figsize=(8, 4.5))
     fig.patch.set_alpha(0)
     ax.set_facecolor("#0b1111")
-    modes = sorted(mode_colors.keys())
+    modes = modes_in_data
     for mode in modes:
         mode_data = max_bpm_df[max_bpm_df["mode"] == mode][["session", "bpm"]]
         mode_full = pd.DataFrame({"session": sessions}).merge(
             mode_data, on="session", how="left"
         )
+        color = mode_colors.get(mode, "#8FD3FE")
 
         ax.plot(
             mode_full["session"],
@@ -58,14 +59,14 @@ def main() -> None:
             marker="o",
             linewidth=2.5,
             markersize=7,
-            color=mode_colors[mode],
+            color=color,
             label=f"Mode {mode}",
         )
         ax.scatter(
             mode_full["session"],
             mode_full["bpm"],
             s=40,
-            color=mode_colors[mode],
+            color=color,
             zorder=4,
         )
 
@@ -111,7 +112,8 @@ def main() -> None:
             fontsize=9,
         )
 
-    ax.legend(title="Mode", framealpha=0.95)
+    if modes:
+        ax.legend(title="Mode", framealpha=0.95)
     grid_color = (0, 1, 170 / 255, 0.08)
     ax.grid(True, linestyle="--", alpha=0.15, color=grid_color)
     fig.tight_layout()
@@ -120,7 +122,7 @@ def main() -> None:
     fig.savefig(OUT_PATH, dpi=150, transparent=True)
     plt.close(fig)
     print(f"Wrote {OUT_PATH}")
-    expected_pairs = len(sessions) * len(mode_colors)
+    expected_pairs = len(sessions) * len(modes)
     n_missing = expected_pairs - len(max_bpm_df)
     if n_missing:
         print(
