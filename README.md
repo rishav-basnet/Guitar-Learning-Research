@@ -2,139 +2,151 @@
 
 ## Overview
 
-This project studies how chord transition performance (A ↔ E) changes under time pressure.
+This project implements a controlled experiment to measure how a beginner improves at a motor skill under time constraints.
 
-BPM controls speed, and mode controls how much time is available to switch chords. Performance is measured using clean_ratio (successful_trials / 4).
-
----
-
-## Motivation
-
-- I was learning guitar and wanted to know whether progress was actually happening, and how fast it showed up.
-- Day-to-day practice felt inconsistent, so I wanted a fixed structure to measure performance instead of relying on intuition.
-- Turning practice into a small experiment made improvement something I could observe, not just assume.
+Instead of relying on subjective perception, performance is quantified using accuracy across varying speed (BPM) and difficulty levels. The goal is to transform practice — typically evaluated by intuition — into structured, measurable data.
 
 ---
 
-## Experiment Design
+## Problem
 
-- Protocol video (same routine each session):  
-  https://www.youtube.com/watch?v=WtXb90taPOY
+Skill improvement is usually judged subjectively, making it difficult to detect real progress or compare performance over time.
 
-- Each session follows the same grid:
-  - 4 modes (difficulty levels)
-  - 6 BPM levels: 60, 70, 80, 90, 100, 110
-  - 4 trials per (mode, BPM)
-
-- Mode (1–4): more strums per cycle → less time to switch chords  
-- BPM: controls tempo and time pressure  
-
-### Practice Protocol
-
-Each session follows a timed strumming exercise:
-
-- A 4-beat cycle is repeated at each BPM.
-- The player alternates between A and E chords.
-
-Modes define how much time is available to switch:
-
-- Mode 1: strum once, switch during remaining beats  
-- Mode 2: strum twice, switch in shorter window  
-- Mode 3: strum three times, very limited switching time  
-- Mode 4: strum continuously, minimal gap to switch  
-
-For each (mode, BPM):
-- 4 trials are performed
-- Each trial is marked successful or not based on a clean, on-time chord change
-
-Each session follows the exact same structure, allowing direct comparison across sessions.
+This project reframes practice as a measurable system, where performance can be tracked, compared, and analyzed under controlled conditions.
 
 ---
 
-## Dataset
+## Approach
 
-Each row represents one block: a single (session, mode, BPM) combination.
+The experiment spans 7 sessions (one per day), enabling analysis of how performance evolves over time under consistent conditions.
+
+Each session follows a fixed experimental structure:
+
+- 4 difficulty modes  
+- 6 BPM levels: 60, 70, 80, 90, 100, 110  
+- 4 trials per (mode, BPM) condition  
+
+Difficulty is controlled through mode, which reduces the available time to switch chords.  
+Speed is controlled through BPM, increasing overall time pressure.
+
+By keeping the structure constant, performance differences reflect actual learning rather than randomness.
+
+---
+
+## Data Collection
+
+Each session records performance for every (mode, BPM) combination.
 
 - successful_trials: number of clean transitions (0–4)  
-- clean_ratio: successful_trials / 4  
+- clean_ratio = successful_trials / 4  
 
-The dataset is stored in `data/main-data.csv` and is fully structured with no missing conditions.
+Each row represents a fixed condition, enabling direct comparison across sessions.
+
+Dataset location:
+data/main-data.csv
 
 ---
 
 ## Analysis
 
-- Session trend: average clean_ratio across all conditions per session  
-- BPM vs performance: how tempo and difficulty affect performance  
-- Threshold (≥ 0.75): highest BPM where performance remains mostly clean  
+The analysis focuses on:
 
----
+- Session progression  
+- BPM vs performance  
+- Difficulty impact  
+- Threshold behavior (≥ 0.75)  
 
-## Reproducibility
+All calculations are centralized in:
+analysis/main_analysis.py
 
-All derived tables used by figures are exported to `outputs/`.
-
-- Regenerate analysis outputs:
-  - `python analysis/main_analysis.py`
-- Verify exported outputs are consistent with recomputation:
-  - `python analysis/verify_consistency.py`
-
-Figure scripts read from `outputs/*.csv` so calculations are centralized and reproducible.
+Derived outputs:
+outputs/
 
 ---
 
 ## Key Insights
 
-- Performance shows an overall upward trend across sessions  
-- Learning is not linear, with plateaus and short regressions  
-- Higher BPM generally reduces performance, especially in harder modes  
-- Modes 3–4 consistently perform worse than modes 1–2  
-- Performance varies noticeably across sessions, even under the same conditions  
+- Performance improves rapidly in early sessions, then slows, indicating initial adaptation followed by stabilization  
+
+- Difficulty has a strong, non-linear impact on accuracy, with higher modes disproportionately reducing performance  
+
+- Speed alone does not explain performance decline — its effect is amplified at higher difficulty levels  
+
+- High accuracy thresholds are consistently achieved in easier modes but rarely reached in harder modes  
+
+- Performance varies across sessions even under identical conditions, showing that short-term progress is inherently unstable  
+
+---
+
+## Reproducibility
+
+All figures and results are generated from exported outputs.
+
+To regenerate:
+python analysis/main_analysis.py
+
+To verify:
+python analysis/verify_consistency.py
+
+All plots read from outputs/*.csv to ensure consistency.
+
+---
+
+## Project Structure
+
+data/       → raw dataset  
+analysis/   → processing and plotting scripts  
+outputs/    → computed results  
+docs/       → experiment documentation  
 
 ---
 
 ## Reflection
 
-Practice felt inconsistent, and the data confirmed that. Progress was visible overall, but individual sessions often moved in unexpected directions.
+Practice is not consistently progressive — variability is a core part of the learning process.
 
-Recording performance made it easier to see patterns that would otherwise be missed or misremembered.
+Recording performance reveals patterns that are not visible through perception alone.
 
 ---
 
-## Structure
+## Limitations
 
-- data/ — dataset  
-- analysis/ — scripts and plots  
-- docs/ — experiment details and data dictionary  
+- Single participant (n = 1)  
+- Short duration  
+- Manual data collection  
+
+This project explores structured practice patterns, not generalizable conclusions.
+
+---
+
+## Takeaway
+
+This project demonstrates how subjective skill development can be reframed as a measurable system.
+
+By controlling variables and tracking performance over time, practice can be analyzed objectively rather than inferred from perception.
 
 ---
 
 ## Tools
 
-Python, pandas, matplotlib
+- Python  
+- pandas  
+- matplotlib  
 
 ---
 
-## Run the analysis
+## Run the Analysis
 
-From the repository root, with a virtual environment:
+python3 -m venv .venv  
+source .venv/bin/activate  
+pip install -r requirements.txt  
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-python analysis/01_load_and_verify.py
-python analysis/main_analysis.py
-python analysis/verify_consistency.py
-python analysis/02_learning_progression.py
-python analysis/03_clean_ratio_vs_bpm.py
-python analysis/04_max_bpm_threshold.py
-```
+python analysis/01_load_and_verify.py  
+python analysis/main_analysis.py  
+python analysis/verify_consistency.py  
+python analysis/02_learning_progression.py  
+python analysis/03_clean_ratio_vs_bpm.py  
+python analysis/04_max_bpm_threshold.py  
 
-Figures are written to `analysis/figures/`. The integrity script checks that `clean_ratio` matches `successful_trials / 4` on every row.
-
----
-
-## Notes
-
-This is a small, single-learner study. It is intended to explore patterns in practice rather than make general conclusions.
+Outputs saved to:
+analysis/figures/
