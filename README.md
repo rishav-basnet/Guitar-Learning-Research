@@ -70,6 +70,19 @@ The dataset is stored in `data/main-data.csv` and is fully structured with no mi
 
 ---
 
+## Reproducibility
+
+All derived tables used by figures are exported to `outputs/`.
+
+- Regenerate analysis outputs:
+  - `python analysis/main_analysis.py`
+- Verify exported outputs are consistent with recomputation:
+  - `python analysis/verify_consistency.py`
+
+Figure scripts read from `outputs/*.csv` so calculations are centralized and reproducible.
+
+---
+
 ## Key Insights
 
 - Performance shows an overall upward trend across sessions  
@@ -111,6 +124,8 @@ python3 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 python analysis/01_load_and_verify.py
+python analysis/main_analysis.py
+python analysis/verify_consistency.py
 python analysis/02_learning_progression.py
 python analysis/03_clean_ratio_vs_bpm.py
 python analysis/04_max_bpm_threshold.py

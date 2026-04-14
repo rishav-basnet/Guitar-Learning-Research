@@ -85,7 +85,7 @@ def verify_integrity(df: pd.DataFrame) -> list[str]:
     if unexpected_mode.any():
         errors.append("Unexpected mode values:\n" + df.loc[unexpected_mode, "mode"].unique().tolist().__repr__())
 
-    counts = df.groupby("session").size()
+    counts = df["session"].value_counts().sort_index()
     bad_counts = counts[counts != ROWS_PER_SESSION]
     if not bad_counts.empty:
         errors.append(
