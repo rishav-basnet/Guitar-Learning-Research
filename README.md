@@ -1,5 +1,15 @@
 # Guitar Skill Acquisition Study
 
+A structured, data-driven study measuring how a beginner improves guitar chord transitions (A ↔ E) under controlled time pressure.
+
+Live Demo: https://rishav-guitar-research.vercel.app/
+
+![Performance Over Time](./docs/chart.png)
+*Figure: Learning progression across sessions showing early improvement followed by stabilization.*
+
+![Experiment Criteria](./docs/attempts.png)
+*Figure: Definition of a successful vs unsuccessful chord transition used for consistent labeling.*
+
 ## Overview
 
 This project implements a controlled experiment to measure how a beginner improves at a motor skill under time constraints.
@@ -19,12 +29,13 @@ This project reframes practice as a measurable system, where performance can be 
 ## Approach
 
 The experiment spans 7 sessions (one per day), enabling analysis of how performance evolves over time under consistent conditions.
+Each session was recorded and manually evaluated to ensure consistent labeling of performance.
 
 Each session follows a fixed experimental structure:
 
-- 4 difficulty modes  
-- 6 BPM levels: 60, 70, 80, 90, 100, 110  
-- 4 trials per (mode, BPM) condition  
+* 4 difficulty modes
+* 6 BPM levels: 60, 70, 80, 90, 100, 110
+* 4 trials per (mode, BPM) condition
 
 Difficulty is controlled through mode, which reduces the available time to switch chords.  
 Speed is controlled through BPM, increasing overall time pressure.
@@ -49,12 +60,12 @@ data/main-data.csv
 
 ## Analysis
 
-The analysis focuses on:
+The analysis quantifies performance across three dimensions:
 
-- Session progression  
-- BPM vs performance  
-- Difficulty impact  
-- Threshold behavior (≥ 0.75)  
+* Learning progression across sessions (trend over time)
+* Performance degradation under increasing BPM
+* Interaction between speed (BPM) and difficulty (mode)
+* Threshold analysis (≥ 0.75 clean_ratio) to estimate reliable performance limits
 
 All calculations are centralized in:
 analysis/main_analysis.py
@@ -66,6 +77,7 @@ outputs/
 
 ## Key Insights
 
+- Early learning shows rapid gains, followed by diminishing returns (typical learning curve behavior)
 - Performance improves rapidly in early sessions, then slows, indicating initial adaptation followed by stabilization  
 
 - Difficulty has a strong, non-linear impact on accuracy, with higher modes disproportionately reducing performance  
@@ -121,9 +133,18 @@ This project explores structured practice patterns, not generalizable conclusion
 
 ## Takeaway
 
-This project demonstrates how subjective skill development can be reframed as a measurable system.
+This project demonstrates how subjective skill development can be converted into a measurable system, enabling objective tracking, comparison, and analysis of progress over time.
 
 By controlling variables and tracking performance over time, practice can be analyzed objectively rather than inferred from perception.
+
+---
+
+## What I Learned
+
+* How to design controlled experiments for skill measurement
+* Importance of consistent data collection protocols
+* How variability affects short-term performance interpretation
+* Translating subjective experiences into quantifiable metrics
 
 ---
 
